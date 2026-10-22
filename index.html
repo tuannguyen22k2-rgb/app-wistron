@@ -191,8 +191,10 @@ if (params.get("name")) {
 }
 
 // Luôn đọc từ localStorage
-const id = params.get("id") || localStorage.getItem("employeeId") || "V25040057";
-const name = params.get("name") || localStorage.getItem("employeeName") || "Nguyễn Mạnh Cương";
+const params = new URLSearchParams(window.location.search);
+
+const id = params.get("id") || "";
+const name = params.get("name") || "";
 
 document.title = id && name ? `${id} - ${name}` : "员工码";
 
