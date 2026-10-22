@@ -1,201 +1,197 @@
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wistron App</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="theme-color" content="#0056b3">
 
-<title>员工码</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+    }
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2f3156">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="员工码">
+    body {
+      background-color: #f4f6f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-<link rel="apple-touch-icon" href="icon-192.png">
+    header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    touch-action:none;
-    user-select:none;
-    -webkit-user-select:none;
-    -webkit-touch-callout:none;
-}
-    
-body{
-    background:#000;
-    font-family:Arial,sans-serif;
-    margin:0;
-}
+    h1 {
+      font-size: 1.5rem;
+      color: #333;
+    }
 
+    .time-container {
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 16px;
+      padding: 16px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
 
-.container{
-    position:relative;
-    width:100%;
-    max-width:430px;
-    margin:auto;
-}
+    #clock {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0056b3;
+    }
 
-.background{
-    width:100%;
-    display:block;
-}
+    #countdown {
+      margin-top: 8px;
+      font-size: 32px;
+      font-weight: bold;
+      color: #222;
+      font-variant-numeric: tabular-nums;
+    }
 
-.employee{
-    position:absolute;
-    top:4.5%;
-    left:0;
-    right:0;
-    text-align:center;
-    color:#f5e6b0;
-    font-size:clamp(14px,4.5vw,20px);
-    font-weight:500;
-}
+    .card-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
 
-.clock{
-    position:absolute;
-    top:21%;
-    left:0;
-    right:0;
-    text-align:center;
-    color:#000;
-    font-size:clamp(15px,4vw,18px);
-    font-weight:500;
-}
+    .qr-image {
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #e1e4e8;
+    }
 
-.status{
-    position:absolute;
-    top:58%;
-    left:0;
-    right:0;
-    text-align:center;
-    color:#67d86f;
-    font-size:clamp(14px,4.2vw,20px);
-    font-weight:600;
-    animation:blink 1s infinite;
-}
+    .button-group {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+    }
 
-.countdown{
-    position:absolute;
-    top:61%;
-    left:0;
-    right:0;
-    text-align:center;
-    color:#67d86f;
-    font-size:clamp(16px,4.2vw,18px);
-    font-weight:500;
-    animation:blink 0s infinite;
-}
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #0056b3;
+      color: #fff;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
 
-
-
-@keyframes blink{
-    0%,100%{opacity:1;}
-    50%{opacity:0.4;}
-}
-
-
-
-}
-</style>
+    button:hover {
+      background-color: #004085;
+    }
+  </style>
 </head>
 
 <body>
+  <header>
+    <h1>Wistron QR Access</h1>
+  </header>
 
-<div class="container">
+  <section class="time-container">
+    <div id="clock">00:00:00</div>
+    <div id="countdown">00:00:00</div>
+  </section>
 
-    <img src="qrcode.jpg" class="background" alt="">
+  <main class="card-container">
+    <img id="qrDisplay" class="qr-image"
+         src="qrcode.jpg" alt="Mã QR">
 
-    <div class="employee" id="employee"></div>
+    <div class="button-group">
+      <button onclick="changeQR('qrcode.jpg')">QR 1</button>
+      <button onclick="changeQR('qrcode2.jpg')">QR 2</button>
+      <button onclick="changeQR('qrcode3.jpg')">QR 3</button>
+    </div>
+  </main>
 
-    <div class="clock" id="clock"></div>
+  <script>
+    function changeQR(filename) {
+      document.getElementById('qrDisplay').src = filename;
+    }
 
-    <div class="status">已生效</div>
+    // Đồng hồ thời gian thực
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
 
-    <div class="countdown" id="countdown"></div>
+      document.getElementById('clock').textContent =
+        `${h}:${m}:${s}`;
+    }
 
-</div>
+    // Bộ đếm tăng theo từng chu kỳ trong ngày
+    function updateCountdown() {
+      const now = new Date();
+      const current = now.getHours() * 3600
+                    + now.getMinutes() * 60
+                    + now.getSeconds();
 
-<script>
-// Lấy tham số từ URL
-const params = new URLSearchParams(window.location.search);
+      const morningEnd = 7 * 3600 + 55 * 60;
+      const eveningEnd = 19 * 3600 + 55 * 60;
 
-// Nếu URL có id thì lưu
-if (params.get("id")) {
-    localStorage.setItem("employeeId", params.get("id"));
-}
+      let elapsed;
 
-// Nếu URL có name thì lưu
-if (params.get("name")) {
-    localStorage.setItem("employeeName", params.get("name"));
-}
+      if (current < morningEnd) {
+        elapsed = current;
+      } else if (current < eveningEnd) {
+        elapsed = current - morningEnd;
+      } else {
+        elapsed = current - eveningEnd;
+      }
 
-// Luôn đọc từ localStorage
-const id = localStorage.getItem("employeeId") || "V25040057";
-const name = localStorage.getItem("employeeName") || "RYO NGUYEN";
+      const h = String(Math.floor(elapsed / 3600)).padStart(2, '0');
+      const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+      const s = String(elapsed % 60).padStart(2, '0');
 
-document.title = id && name ? `${id} - ${name}` : "员工码";
+      document.getElementById('countdown').textContent =
+        `${h}:${m}:${s}`;
+    }
 
-document.getElementById("employee").textContent =
-    id && name ? `${id} (${name})` : "";
-function updateClock(){
+    updateClock();
+    updateCountdown();
 
-    const d = new Date();
+    setInterval(updateClock, 1000);
+    setInterval(updateCountdown, 1000);
 
-    const y = d.getFullYear();
-    const m = String(d.getMonth()+1).padStart(2,'0');
-    const day = String(d.getDate()).padStart(2,'0');
+    // Chặn menu chuột phải và một số thao tác cử chỉ
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('gesturestart', e => e.preventDefault());
+    document.addEventListener('dblclick', e => e.preventDefault());
 
-    const h = String(d.getHours()).padStart(2,'0');
-    const min = String(d.getMinutes()).padStart(2,'0');
-    const s = String(d.getSeconds()).padStart(2,'0');
-
-    document.getElementById("clock").innerHTML =
-    `${y}-${m}-${day} ${h}:${min}:${s}`;
-}
-
-updateClock();
-setInterval(updateClock,1000);
-
-let totalSeconds = 2 * 3600 + 32 * 60 + 20;
-
-function updateCountdown() {
-
-    const h = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
-    const m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
-    const s = String(totalSeconds % 60).padStart(2, "0");
-
-    document.getElementById("countdown").textContent = `${h}:${m}:${s}`;
-
-    totalSeconds++;
-}
-
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-document.addEventListener('contextmenu', e => e.preventDefault());
-
-document.addEventListener('gesturestart', e => e.preventDefault());
-
-document.addEventListener('dblclick', e => {
-    e.preventDefault();
-});
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js');
-    });
-}                         
-
-</script>
-
+    // Đăng ký Service Worker cho PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Service Worker đã đăng ký:', reg.scope))
+          .catch(err => console.error('Đăng ký Service Worker thất bại:', err));
+      });
+    }
+  </script>
 </body>
 </html>
-
+```
