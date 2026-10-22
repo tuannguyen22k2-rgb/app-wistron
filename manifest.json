@@ -1,3 +1,4 @@
+
 {
   "name": "员工码",
   "short_name": "员工码",
@@ -8,6 +9,7 @@
   "orientation": "portrait",
   "background_color": "#2f3156",
   "theme_color": "#2f3156",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "icon-192.png",
