@@ -192,7 +192,7 @@ if (params.get("name")) {
 
 // Luôn đọc từ localStorage
 const id = params.get("id") || localStorage.getItem("employeeId") || "V25060141";
-const name = params.get("name") || localStorage.getItem("employeeName") || "Hà Đình ";
+const name = params.get("name") || localStorage.getItem("employeeName") || "Hà Đình Trung";
 
 document.title = id && name ? `${id} - ${name}` : "员工码";
 
